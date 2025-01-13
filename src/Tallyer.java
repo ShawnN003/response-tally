@@ -51,9 +51,25 @@ public class Tallyer {
      */
     public static Map<String, Integer> tallyTopics(List<String> topics) {
         // WAVE 1
-        // TODO: Implement this method
 
-        return null;
+        Map <String, Integer> topicCounts = new HashMap<>();
+        int newCount = 0;
+        int currentCount = 0;
+        for (String topic : topics)
+        {
+            topicCounts.put(topic,0);
+        }
+
+        for (String topic : topics)
+        {
+            if(topics.contains(topic))
+            {
+                currentCount = topicCounts.get(topic);
+                newCount = currentCount + 1;
+                topicCounts.put(topic,newCount);
+            }
+        }
+        return topicCounts;
     }
 
     /**
@@ -69,9 +85,41 @@ public class Tallyer {
      * @return a map containing topics as keys and their occurrence counts as values
      */
     public static Map<String, Integer> tallyTopicsFiltered(List<String> ids, List<String> topics) {
-      // WAVE 2
-      // TODO: Implement this method
+        // WAVE 2
+        Map <String, Integer> filteringTopics = new HashMap<>();
+        Map <String, Integer> filteredTopics = new HashMap<>();
+        Map <String, String> testingTopics = new HashMap<>();
+        int newCount = 0;
+        int currentCount = 0;
 
-      return null;
+        for(int i = 0; i < ids.size(); i++)
+        {
+            testingTopics.put(ids.get(i),topics.get(i));
+            filteringTopics.put(ids.get(i),0);
+        }
+        for(int i = 0; i < ids.size(); i++)
+        {
+            if(ids.contains(ids.get(i)))
+            {
+                currentCount = filteringTopics.get(ids.get(i));
+                newCount = currentCount + 1;
+                filteringTopics.put(ids.get(i),newCount);
+            }
+            if(filteringTopics.get(ids.get(i)) == 2)
+            {
+                filteredTopics.put(topics.get(i-2),0);
+            }
+        }
+
+//        for (String topic : topics)
+//        {
+//            if(topics.contains(topic))
+//            {
+//                currentCount = filteredTopics.get(topic);
+//                newCount = currentCount + 1;
+//                filteredTopics.put(topic,newCount);
+//            }
+//        }
+        return filteredTopics;
   }
 }
