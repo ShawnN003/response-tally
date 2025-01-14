@@ -1,15 +1,9 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 /**
- * @author Shawn Nguru
- * SDEV 301 Tallyer Assignment
  * The Tallyer class provides functionality for reading ID and topic pairs from user input,
  * and tallying the number of occurrences of each topic.
  */
-public class Tallyer {
-
+public class Tallyer{
     /**
      * The main method serves as the entry point for the program. It reads pairs of IDs and topics
      * from standard input, stores them in lists, and then calculates the number of occurrences
@@ -17,20 +11,31 @@ public class Tallyer {
      *
      * @param args command-line arguments (not used in this implementation)
      */
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+    public static void main(String[] args)
+    {
+
 
         List<String> ids = new ArrayList<>();
         List<String> topics = new ArrayList<>();
-        
+
         // Reading input for IDs and topics
         // Assumes file is well formed into pairs
-        while (input.hasNext()) {
-            ids.add(input.next());
-            topics.add(input.next());
-        }
-        input.close();
-        
+        topics.add("maps");
+        topics.add("maps");
+        topics.add("lists");
+        topics.add("arrays");
+        topics.add("loops");
+        topics.add("arrays");
+        topics.add("compound");
+
+        ids.add("studentA");
+        ids.add("studentB");
+        ids.add("studentA");
+        ids.add("studentB");
+        ids.add("studentC");
+        ids.add("studentC");
+        ids.add("studentA");
+
         // Wave 1
         Map<String, Integer> topicCounts = tallyTopics(topics);
         System.out.println("Here are how many times each topic appears (unfiltered):");
@@ -63,19 +68,25 @@ public class Tallyer {
 
         for (String topic : topics)
         {
-            if(topics.contains(topic))
-            {
-                currentCount = topicCounts.get(topic);
-                newCount = currentCount + 1;
-                topicCounts.put(topic,newCount);
-            }
+            currentCount = topicCounts.get(topic);
+            newCount = currentCount + 1;
+            topicCounts.put(topic,newCount);
         }
         return topicCounts;
     }
 
+//    for(int i = 0; i < ids.size(); i++)
+//    {
+//        filteringTopics.put(ids.get(i),topics.get(i));
+//        if(filteringTopics.containsKey(ids.get(i)))
+//        {
+//
+//        }
+//    }
+
     /**
      * Tally the occurrences of valid votes for each topic from the provided lists of IDs and topics.
-     * 
+     *
      * The lists are of equal length and are aligned: the id at index zero cast a vote for
      * the topic at endex 0, the id at index 1 cast a vote for the topic at index 1, etc.
      * It returns a map where each topic is associated with the number of times it appears in the input.
@@ -85,9 +96,10 @@ public class Tallyer {
      * @param topics a list of strings representing the topics to be tallied
      * @return a map containing topics as keys and their occurrence counts as values
      */
-    public static Map<String, Integer> tallyTopicsFiltered(List<String> ids, List<String> topics) {
+    public static Map<String, Integer> tallyTopicsFiltered(List<String> ids, List<String> topics)
+    {
         // WAVE 2
-        Map <String, Integer> filteringTopics = new HashMap<>();
+        Map <String, Integer> idCounts = new HashMap<>();
         Map <String, Integer> filteredTopics = new HashMap<>();
         Map <String, String> testingTopics = new HashMap<>();
         int newCount = 0;
@@ -96,31 +108,37 @@ public class Tallyer {
         for(int i = 0; i < ids.size(); i++)
         {
             testingTopics.put(ids.get(i),topics.get(i));
-            filteringTopics.put(ids.get(i),0);
+            idCounts.put(ids.get(i),0);
         }
         for(int i = 0; i < ids.size(); i++)
         {
             if(ids.contains(ids.get(i)))
             {
-                currentCount = filteringTopics.get(ids.get(i));
+                currentCount = idCounts.get(ids.get(i));
                 newCount = currentCount + 1;
-                filteringTopics.put(ids.get(i),newCount);
+                idCounts.put(ids.get(i),newCount);
             }
-            if(filteringTopics.get(ids.get(i)) == 2)
+        }
+        for(int i = 0; i < ids.size(); i++)
+        {
+            System.out.println(ids.get(i));
+            System.out.println(topics.get(i));
+            System.out.println("*************************");
+            if(idCounts.get(ids.get(i)) == 2)
             {
-                filteredTopics.put(topics.get(i-2),0);
+                if(!filteredTopics.containsKey(topics.get(i)))
+                {
+                    filteredTopics.put(topics.get(i),1);
+                }
+                else
+                {
+                    currentCount = filteredTopics.get(topics.get(i));
+                    newCount = currentCount + 1;
+                    filteredTopics.put(topics.get(i), newCount);
+                }
             }
         }
 
-//        for (String topic : topics)
-//        {
-//            if(topics.contains(topic))
-//            {
-//                currentCount = filteredTopics.get(topic);
-//                newCount = currentCount + 1;
-//                filteredTopics.put(topic,newCount);
-//            }
-//        }
         return filteredTopics;
-  }
+    }
 }
